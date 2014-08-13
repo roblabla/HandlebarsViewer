@@ -3,10 +3,14 @@ var urlmodule   = require("url");
 var pathmodule  = require("path");
 var fs          = require("fs");
 var less        = require("less-middleware");
+var helpers     = require("Handlebars-Helpers").helpers.all;
 
 var app = express();
-app.engine("hbs", require("express-handlebars")({}));
+app.engine("hbs", require("express-handlebars")({
+  helpers: helpers
+}));
 app.set("view engine", "hbs");
+
 app.set("views", pathmodule.join(__dirname, "frontend", "views"));
 app.use(require("morgan")('dev'));
 app.use(less(pathmodule.join(__dirname, "frontend", "public"),
@@ -14,7 +18,6 @@ app.use(less(pathmodule.join(__dirname, "frontend", "public"),
   dest: pathmodule.join(__dirname, "frontend", "public"),
   preprocess: {
     path: function(lessPath, req) {
-      console.log(lessPath);
       return lessPath.replace(pathmodule.join(__dirname, "frontend", "public", "assets", "css"), pathmodule.join(__dirname, "frontend", "public", "assets", "less"));
     }
   }
