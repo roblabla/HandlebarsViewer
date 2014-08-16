@@ -3,13 +3,23 @@ var urlmodule   = require("url");
 var pathmodule  = require("path");
 var fs          = require("fs");
 var less        = require("less-middleware");
-var helpers     = require("Handlebars-Helpers").helpers.all;
+var helpers     = require("Handlebars-Helpers");
+var hbsexpress  = require("hbs");
 
 var app = express();
-app.engine("hbs", require("express-handlebars")({
-  helpers: helpers
-}));
+app.engine("hbs", hbsexpress.__express);
 app.set("view engine", "hbs");
+
+helpers.register(hbsexpress.handlebars, { include: {
+  lookup: function (path) {
+    return (new (app.get("view"))(path, {
+      defaultEngine: app.get("view engine"),
+      root: app.get("views"),
+      engines: app.engines
+    })).path;
+  },
+  cache: hbsexpress.cache
+}});
 
 app.set("views", pathmodule.join(__dirname, "frontend", "views"));
 app.use(require("morgan")('dev'));
