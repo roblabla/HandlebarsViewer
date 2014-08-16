@@ -18,7 +18,6 @@ helpers.register(hbsexpress.handlebars, { include: {
       engines: app.engines
     })).path;
   },
-  cache: hbsexpress.cache
 }});
 
 app.set("views", pathmodule.join(__dirname, "frontend", "views"));
