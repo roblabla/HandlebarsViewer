@@ -10,7 +10,7 @@ var app = express();
 app.engine("hbs", hbsexpress.__express);
 app.set("view engine", "hbs");
 
-helpers.register(hbsexpress.handlebars, { include: {
+helpers.register(hbsexpress.handlebars, { layouts: {
   lookup: function (path) {
     return (new (app.get("view"))(path, {
       defaultEngine: app.get("view engine"),
