@@ -5,6 +5,7 @@ var fs          = require("fs");
 var less        = require("less-middleware");
 var helpers     = require("Handlebars-Helpers");
 var hbsexpress  = require("hbs");
+var _           = require("lodash");
 
 var app = express();
 app.engine("hbs", hbsexpress.__express);
@@ -33,12 +34,22 @@ app.use(less(pathmodule.join(__dirname, "frontend", "public"),
 }));
 app.use(express.static(pathmodule.join(__dirname, "frontend", "public")));
 
+var globaljson = {};
+
+try {
+  globaljson = JSON.parse(fs.readFileSync(pathmodule.join(__dirname, "data", "global.json")));
+} catch(err) {
+  console.log(err);
+}
+
 app.all(/^([^.]+)$/, function(req, res) {
   var path = urlmodule.parse(req.url).pathname.substr(1);
   var json = {};
   try {
     json = JSON.parse(fs.readFileSync(pathmodule.join(__dirname, "data", path + ".json")));
+    _.defaults(json, globaljson);
   } catch (err) {
+    console.log(err);
   }
   res.render(path, json);
 });

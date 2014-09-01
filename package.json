@@ -7,6 +7,7 @@
     "hbs": "~2.7.0",
     "less-middleware": "~1.0.3",
     "morgan": "~1.2.2",
-    "Handlebars-Helpers": "git+ssh://git@github.com:uploadli/handlebars-helpers.git"
+    "Handlebars-Helpers": "git+ssh://git@github.com:uploadli/handlebars-helpers.git",
+    "lodash": "~2.4.1"
   }
 }
