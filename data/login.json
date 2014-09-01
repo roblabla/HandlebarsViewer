@@ -1,0 +1,11 @@
+{
+  "site": {
+    "name": "Upload",
+    "page": "Login"
+  },
+  "signin": {
+    "facebook": "Sign in with Facebook",
+    "twitter": "Sign in with Twitter",
+    "upload": "Sign In"
+  }
+}
